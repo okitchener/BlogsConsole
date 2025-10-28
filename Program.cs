@@ -26,6 +26,7 @@ if (choice == "1")
 else if (choice == "2")
 {
   //Add a Blog
+  AddABlog();
 }
 else if (choice == "3")
 {
@@ -43,25 +44,28 @@ else
 
 
 static void DisplayAllBlogs()
-{ var db = new DataContext();
+{
+  var db = new DataContext();
   var query = db.Blogs.OrderBy(b => b.Name);
 
-Console.WriteLine("All blogs in the database:");
-foreach (var item in query)
-{
-  Console.WriteLine(item.Name);
-}  
+  Console.WriteLine("All blogs in the database:");
+  foreach (var item in query)
+  {
+    Console.WriteLine(item.Name);
+  }
 }
 
-// Create and save a new Blog
-// Console.Write("Enter a name for a new Blog: ");
-// var name = Console.ReadLine();
+static void AddABlog()
+{
+var db = new DataContext();
+  Console.Write("Enter a name for a new Blog: ");
+var name = Console.ReadLine();
 
-// var blog = new Blog { Name = name };
+var blog = new Blog { Name = name };
 
 
-// db.AddBlog(blog);
-// logger.Info("Blog added - {name}", name);
+db.AddBlog(blog); 
+}
 
 
 
