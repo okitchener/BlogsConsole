@@ -18,6 +18,10 @@ public class DataContext : DbContext
     this.Posts.Add(post);
     this.SaveChanges();
   }
+  public void DisplayPost(Post post)
+  {
+    Console.WriteLine($"Blog: {post.Blog.Name} | Title: {post.Title} | Content: {post.Content}");
+  }
 
   protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {

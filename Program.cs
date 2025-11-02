@@ -36,6 +36,7 @@ else if (choice == "3")
 else if (choice == "4")
 {
   //Display Posts
+  DisplayPosts();
 }
 else
 {
@@ -141,6 +142,45 @@ static void CreatePost()
   var post = new Post { Title = title, Content = content, BlogId = blogId };
   db.AddPost(post);
   Console.WriteLine("Post added successfully!");
+}
+
+static void DisplayPosts()
+{
+  //prompt user to select which blog to view posts from
+  var db = new DataContext();
+  var query = db.Blogs.OrderBy(b => b.BlogId).ToList();
+
+  if (!query.Any())
+  {
+    Console.WriteLine("No blogs available.");
+    return;
+  }
+
+  Console.WriteLine("Select the blog you want to view posts from:");
+  foreach (var item in query)
+  {
+    Console.WriteLine($"{item.BlogId}: {item.Name}");
+  }
+
+  // Validate blog selection
+  int blogId;
+  bool validSelection = false;
+
+    Console.Write("Enter the blog ID: ");
+    string input = Console.ReadLine()!;
+
+    if (int.TryParse(input, out blogId))
+    {
+      // Check if the entered blog ID exists in the database
+      if (query.Any(b => b.BlogId == blogId))
+      {
+        validSelection = true;
+      }
+      else
+      {
+        Console.WriteLine("Invalid blog ID. Please select from the available blogs.");
+      }
+    }
 }
 
 logger.Info("Program ended");
