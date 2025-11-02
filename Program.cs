@@ -114,8 +114,18 @@ static void CreatePost()
   } while (!validSelection);
   
   //post details can now be entered
-  Console.Write("Enter the post title: ");
-  string title = Console.ReadLine()!;
+  string title;
+  do
+  {
+    Console.Write("Enter the post title: ");
+    title = Console.ReadLine()!;
+    
+    if (string.IsNullOrWhiteSpace(title))
+    {
+      Console.WriteLine("Title cannot be empty. Please enter a title.");
+    }
+  } while (string.IsNullOrWhiteSpace(title));
+  
   Console.Write("Enter the post content: ");
   string content = Console.ReadLine()!;
 
