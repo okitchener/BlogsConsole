@@ -126,8 +126,17 @@ static void CreatePost()
     }
   } while (string.IsNullOrWhiteSpace(title));
   
-  Console.Write("Enter the post content: ");
-  string content = Console.ReadLine()!;
+  string content;
+  do
+  {
+    Console.Write("Enter the post content: ");
+    content = Console.ReadLine()!;
+    
+    if (string.IsNullOrWhiteSpace(content))
+    {
+      Console.WriteLine("Content cannot be empty. Please enter content for the post.");
+    }
+  } while (string.IsNullOrWhiteSpace(content));
 
   var post = new Post { Title = title, Content = content, BlogId = blogId };
   db.AddPost(post);
