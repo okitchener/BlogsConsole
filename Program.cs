@@ -78,7 +78,15 @@ static void CreatePost()
   {
     Console.WriteLine($"{item.BlogId}: {item.Name}");
   }
-}
+  //post details can now be entered
+  int blogId = int.Parse(Console.ReadLine()!);
+  Console.Write("Enter the post title: ");
+  string title = Console.ReadLine()!;
+  Console.Write("Enter the post content: ");
+  string content = Console.ReadLine()!;
 
+  var post = new Post { Title = title, Content = content, BlogId = blogId };
+  db.AddPost(post);
+}
 
 logger.Info("Program ended");
