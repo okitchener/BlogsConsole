@@ -166,6 +166,8 @@ static void DisplayPosts()
   int blogId;
   bool validSelection = false;
 
+  do
+  {
     Console.Write("Enter the blog ID: ");
     string input = Console.ReadLine()!;
 
@@ -181,6 +183,36 @@ static void DisplayPosts()
         Console.WriteLine("Invalid blog ID. Please select from the available blogs.");
       }
     }
+    else
+    {
+      Console.WriteLine("Please enter a valid number.");
+    }
+  } while (!validSelection);
+
+  // Get the selected blog name for display
+  var selectedBlog = query.First(b => b.BlogId == blogId);
+  
+  // Get all posts for the selected blog
+  var posts = db.Posts.Where(p => p.BlogId == blogId).OrderBy(p => p.PostId).ToList();
+  
+  Console.WriteLine($"\nBlog: {selectedBlog.Name}");
+  Console.WriteLine($"Number of Posts: {posts.Count}");
+  Console.WriteLine(new string('-', 50));
+  
+  if (posts.Any())
+  {
+    foreach (var post in posts)
+    {
+      Console.WriteLine($"Post ID: {post.PostId}");
+      Console.WriteLine($"Title: {post.Title}");
+      Console.WriteLine($"Content: {post.Content}");
+      Console.WriteLine(new string('-', 30));
+    }
+  }
+  else
+  {
+    Console.WriteLine("No posts found for this blog.");
+  }
 }
 
 logger.Info("Program ended");
