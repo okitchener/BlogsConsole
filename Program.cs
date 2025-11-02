@@ -31,6 +31,7 @@ else if (choice == "2")
 else if (choice == "3")
 {
   //Create Post
+  CreatePost();
 }
 else if (choice == "4")
 {
@@ -67,6 +68,17 @@ var blog = new Blog { Name = name };
 db.AddBlog(blog); 
 }
 
+static void CreatePost()
+{
+  //prompt user to select which blog to add post to
+  var db = new DataContext();
+  var query = db.Blogs.OrderBy(b => b.BlogId);
+  Console.WriteLine("Select the blog you want to add a post to:");
+  foreach (var item in query)
+  {
+    Console.WriteLine($"{item.BlogId}: {item.Name}");
+  }
+}
 
 
 logger.Info("Program ended");
