@@ -20,7 +20,7 @@ public class DataContext : DbContext
   }
   public void DisplayPost(Post post)
   {
-    Console.WriteLine($"Blog: {post.Blog.Name} | Title: {post.Title} | Content: {post.Content}");
+    Console.WriteLine($"Blog: {post.Blog?.Name ?? "Unknown"} | Title: {post.Title} | Content: {post.Content}");
   }
 
   protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
