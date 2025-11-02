@@ -66,14 +66,23 @@ static void DisplayAllBlogs()
 
 static void AddABlog()
 {
-var db = new DataContext();
-  Console.Write("Enter a name for a new Blog: ");
-var name = Console.ReadLine();
+  var db = new DataContext();
+  
+  string name;
+  do
+  {
+    Console.Write("Enter a name for a new Blog: ");
+    name = Console.ReadLine()!;
+    
+    if (string.IsNullOrWhiteSpace(name))
+    {
+      Console.WriteLine("Blog name cannot be empty. Please enter a name.");
+    }
+  } while (string.IsNullOrWhiteSpace(name));
 
-var blog = new Blog { Name = name };
-
-
-db.AddBlog(blog); 
+  var blog = new Blog { Name = name };
+  db.AddBlog(blog);
+  Console.WriteLine("Blog added successfully!");
 }
 
 static void CreatePost()
