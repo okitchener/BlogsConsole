@@ -13,6 +13,7 @@ Console.WriteLine("1. Display All Blogs");
 Console.WriteLine("2. Add Blog");
 Console.WriteLine("3. Create Post");
 Console.WriteLine("4. Display Posts");
+Console.WriteLine("Enter q to quit ");
 
 // Input Selection
 string? choice = Console.ReadLine();
@@ -37,6 +38,12 @@ else if (choice == "4")
 {
   //Display Posts
   DisplayPosts();
+}
+else if (choice?.ToLower() == "q")
+{
+  Console.WriteLine("Goodbye!");
+  logger.Info("User quit the application");
+  return;
 }
 else
 {
