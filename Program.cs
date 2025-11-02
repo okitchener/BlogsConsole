@@ -72,14 +72,48 @@ static void CreatePost()
 {
   //prompt user to select which blog to add post to
   var db = new DataContext();
-  var query = db.Blogs.OrderBy(b => b.BlogId);
+  var query = db.Blogs.OrderBy(b => b.BlogId).ToList();
+  
+  if (!query.Any())
+  {
+    Console.WriteLine("No blogs available. Please create a blog first.");
+    return;
+  }
+  
   Console.WriteLine("Select the blog you want to add a post to:");
   foreach (var item in query)
   {
     Console.WriteLine($"{item.BlogId}: {item.Name}");
   }
+  
+  // Validate blog selection
+  int blogId;
+  bool validSelection = false;
+  
+  do
+  {
+    Console.Write("Enter the blog ID: ");
+    string input = Console.ReadLine()!;
+    
+    if (int.TryParse(input, out blogId))
+    {
+      // Check if the entered blog ID exists in the database
+      if (query.Any(b => b.BlogId == blogId))
+      {
+        validSelection = true;
+      }
+      else
+      {
+        Console.WriteLine("Invalid blog ID. Please select from the available blogs.");
+      }
+    }
+    else
+    {
+      Console.WriteLine("Please enter a valid number.");
+    }
+  } while (!validSelection);
+  
   //post details can now be entered
-  int blogId = int.Parse(Console.ReadLine()!);
   Console.Write("Enter the post title: ");
   string title = Console.ReadLine()!;
   Console.Write("Enter the post content: ");
@@ -87,6 +121,7 @@ static void CreatePost()
 
   var post = new Post { Title = title, Content = content, BlogId = blogId };
   db.AddPost(post);
+  Console.WriteLine("Post added successfully!");
 }
 
 logger.Info("Program ended");
